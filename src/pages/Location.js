@@ -60,7 +60,7 @@ function DriverMap() {
     if (driverLocation) {
       // Initialize HERE Maps
       const platform = new window.H.service.Platform({
-        apikey: 'U_FSa0mUYnANGMVRfe-FvCfQ7hPN_Tv5e_JYq-tru3M',
+        apikey: process.env.HERE_MAP_API,
       });
 
       const defaultLayers = platform.createDefaultLayers();

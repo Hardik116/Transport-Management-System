@@ -19,7 +19,7 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState('Mini Truck');
   const [authToken, setAuthToken] = useState('');
   const navigate = useNavigate();
-  const apiToken = "jXN4zPr2afiDXz3a21gwjfqIs-7p2wpxBFgomV5PKGCHnc-nWJy9Qvn3LBneHzv6NzU";
+  const apiToken = process.env.API_KEY;
   const userEmail = "hardikr840@gmail.com";
 
   useEffect(() => {
