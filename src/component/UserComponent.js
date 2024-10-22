@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Table, Spin } from 'antd';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-// Firestore initialization (Firebase already configured)
 const db = getFirestore();
 
 const UserComponent = () => {
@@ -18,17 +17,14 @@ const UserComponent = () => {
                 ...doc.data(),
             }));
 
-            // Filter users where isDriver is false
             const filteredUsers = userList.filter(user => !user.isDriver);
 
-            // Fetch orders and count total orders for each user
             const ordersSnapshot = await getDocs(collection(db, 'requests'));
             const orderCounts = {};
 
-            // Count total orders per user
             ordersSnapshot.forEach(doc => {
                 const order = doc.data();
-                const userId = order.userId; // Assuming userId is stored in each order
+                const userId = order.userId; 
 
                 if (orderCounts[userId]) {
                     orderCounts[userId]++;
@@ -40,7 +36,7 @@ const UserComponent = () => {
             // Map filtered users to include total orders
             const usersWithOrderCount = filteredUsers.map(user => ({
                 ...user,
-                totalOrders: orderCounts[user.id] || 0, // Default to 0 if no orders
+                totalOrders: orderCounts[user.id] || 0, 
             }));
 
             setUsers(usersWithOrderCount);
@@ -76,7 +72,7 @@ const UserComponent = () => {
             title: 'Total Orders',
             dataIndex: 'totalOrders',
             key: 'totalOrders',
-            render: (text) => (text ? text : 'No orders'), // Handle cases with no orders
+            render: (text) => (text ? text : 'No orders'), 
         },
     ];
 
@@ -89,7 +85,7 @@ const UserComponent = () => {
                 <Table
                     columns={columns}
                     dataSource={users}
-                    rowKey="id" // Set unique key for each row
+                    rowKey="id" 
                 />
             )}
         </div>

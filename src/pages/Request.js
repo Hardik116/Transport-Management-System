@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebaseConfig'; // Import Firestore instance
-import { collection, onSnapshot, updateDoc, doc, deleteDoc, getDoc } from 'firebase/firestore'; // Import necessary Firestore methods
-import { auth } from '../firebaseConfig'; // Import authentication module
+import { db } from '../firebaseConfig'; 
+import { collection, onSnapshot, updateDoc, doc, deleteDoc, getDoc } from 'firebase/firestore'; 
+import { auth } from '../firebaseConfig'; 
 
 const ViewRequests = () => {
-  const [requests, setRequests] = useState([]); // State to store requests
-  const [loading, setLoading] = useState(true); // State to manage loading state
-  const [driverId, setDriverId] = useState(null); // State to store the logged-in driver's ID
-
+  const [requests, setRequests] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [driverId, setDriverId] = useState(null);
   useEffect(() => {
-    const currentUser = auth.currentUser; // Get the currently logged-in user
+    const currentUser = auth.currentUser;
     if (currentUser) {
-      setDriverId(currentUser.uid); // Set the driver's ID if logged in
+      setDriverId(currentUser.uid);
     }
 
     const unsubscribe = onSnapshot(collection(db, 'requests'), (snapshot) => {
@@ -19,11 +18,11 @@ const ViewRequests = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setRequests(requestList); // Set the requests data to state
-      setLoading(false); // Set loading to false after data is fetched
+      setRequests(requestList);
+      setLoading(false); 
     }, (error) => {
       console.error('Error fetching requests:', error);
-      setLoading(false); // Set loading to false even if there's an error
+      setLoading(false);
     });
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
@@ -64,19 +63,16 @@ const ViewRequests = () => {
   const handleCompleteOrder = async (requestId) => {
     try {
       const requestDoc = doc(db, 'requests', requestId);
-      // Update request status to completed
       await updateDoc(requestDoc, { status: 'Completed', isAvailable: true });
 
-      // Get the driver document
       const driverDoc = doc(db, 'drivers', driverId);
       const driverSnapshot = await getDoc(driverDoc);
 
       if (driverSnapshot.exists()) {
-        // Check if totalRides exists, if not initialize it to 0
         const totalRides = driverSnapshot.data().totalRides || 0;
         await updateDoc(driverDoc, {  
-          totalRides: totalRides + 1, // Increment totalRides by 1
-          isAvailable: true // Set driver as available after completing the order
+          totalRides: totalRides + 1, 
+          isAvailable: true
         });
       } else {
         console.error('Driver document does not exist');
@@ -100,12 +96,12 @@ const ViewRequests = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading message while fetching data
+    return <div>Loading...</div>; 
   }
 
   // Filter requests to show only those associated with the logged-in driver and not completed
   const filteredRequests = requests.filter(request => 
-    request.driverId === driverId && request.status !== 'Completed' // Exclude completed requests
+    request.driverId === driverId && request.status !== 'Completed'
   );
 
   return (
@@ -146,7 +142,7 @@ const ViewRequests = () => {
                 )}
                 {request.status === 'Accepted' && (
                   <button
-                    onClick={() => handlePickedUp(request.id)} // Show 'Order Picked Up' button
+                    onClick={() => handlePickedUp(request.id)} 
                     className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition duration-300"
                   >
                     Order Picked Up
@@ -154,7 +150,7 @@ const ViewRequests = () => {
                 )}
                 {request.status === 'Picked Up' && (
                   <button
-                    onClick={() => handleCompleteOrder(request.id)} // Show 'Complete Order' button
+                    onClick={() => handleCompleteOrder(request.id)} 
                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
                   >
                     Complete Order

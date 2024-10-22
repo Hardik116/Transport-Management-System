@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // For API requests
-import { db } from '../firebaseConfig'; // Firestore config
+import axios from 'axios'; 
+import { db } from '../firebaseConfig';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebaseConfig';
@@ -8,14 +8,14 @@ import { auth } from '../firebaseConfig';
 const MapPage = () => {
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [distance, setDistance] = useState(0); // State to store distance
-  const [estimatedCost, setEstimatedCost] = useState(0); // State to store estimated cost
+  const [distance, setDistance] = useState(0);
+  const [estimatedCost, setEstimatedCost] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const { pickupCity, pickupState, pickupCountry, dropOffCity, dropOffState, dropOffCountry, estimatedWeight, vehicleType } = location.state || {};
 
   const user = auth.currentUser;
-  const HERE_API_KEY = 'U_FSa0mUYnANGMVRfe-FvCfQ7hPN_Tv5e_JYq-tru3M'; // Replace with your HERE Maps API key
+  const HERE_API_KEY = 'U_FSa0mUYnANGMVRfe-FvCfQ7hPN_Tv5e_JYq-tru3M'; 
 
   // Function to fetch latitude and longitude using HERE Geocoding API
   const getLatLng = async (city, state, country) => {
@@ -29,7 +29,7 @@ const MapPage = () => {
       });
       if (response.data.items.length > 0) {
         const coordinates = response.data.items[0].position;
-        return { lat: coordinates.lat, lng: coordinates.lng }; // Return lat, lng
+        return { lat: coordinates.lat, lng: coordinates.lng }; 
       }
     } catch (error) {
       console.error('Error fetching location coordinates:', error);
@@ -50,7 +50,7 @@ const MapPage = () => {
         },
       });
       const distanceInMeters = response.data.routes[0].sections[0].summary.length;
-      return distanceInMeters / 1000; // Convert meters to kilometers
+      return distanceInMeters / 1000; 
     } catch (error) {
       console.error('Error calculating distance:', error);
       return 0;
@@ -60,11 +60,11 @@ const MapPage = () => {
   // Function to calculate cost based on vehicle type and distance
   const calculateCost = (distance, vehicleType) => {
     const ratePerKm = {
-      'Mini Truck': 5,   // Example rate: 10 units per km for cars
-      'Medium Truck': 10,   // Example rate: 5 units per km for bikes
-      'Heavy Truck': 15, // Example rate: 15 units per km for trucks
+      'Mini Truck': 5,   
+      'Medium Truck': 10,   
+      'Heavy Truck': 15,
     };
-    return distance * (ratePerKm[vehicleType] || 10); // Default rate
+    return distance * (ratePerKm[vehicleType] || 10); 
   };
 
   useEffect(() => {
@@ -130,8 +130,8 @@ const MapPage = () => {
         pickupLocation: { city: pickupCity, state: pickupState || 'Not provided', country: pickupCountry || 'Not provided' },
         dropLocation: { city: dropOffCity, state: dropOffState || 'Not provided', country: dropOffCountry || 'Not provided' },
         parcelWeight: estimatedWeight,
-        distance: distance, // Save the calculated distance
-        estimatedCost: estimatedCost, // Save the estimated cost
+        distance: distance,
+        estimatedCost: estimatedCost,
       };
 
       const requestDocRef = await addDoc(collection(db, 'requests'), requestData);

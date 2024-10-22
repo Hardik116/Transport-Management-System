@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { auth } from '../firebaseConfig'; // Ensure the import is correct
+import { auth } from '../firebaseConfig'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/'); // Redirect to the home page after successful login
+      navigate('/'); 
     } catch (err) {
       setError(err.message);
     }
   };
 
   const handleDriverLogin = () => {
-    navigate('/driverlogin'); // Navigate to the DriverLogin page
+    navigate('/driverlogin'); 
   };
 
   return (
@@ -64,7 +64,7 @@ const Login = () => {
           </Link>
         </p>
         <button
-          onClick={handleDriverLogin} // Navigate to the DriverLogin page on click
+          onClick={handleDriverLogin} 
           className="w-full p-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300 mt-4"
         >
           Login as Driver

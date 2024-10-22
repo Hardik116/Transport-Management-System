@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebaseConfig'; // Import Firestore instance
+import { db } from '../firebaseConfig'; 
 import { collection, getDocs } from 'firebase/firestore';
-import { auth } from '../firebaseConfig'; // Import auth instance to get current user
+import { auth } from '../firebaseConfig';
 
 function Completed() {
-  const [completedRequests, setCompletedRequests] = useState([]); // State to store completed requests
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [completedRequests, setCompletedRequests] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCompletedRequests = async () => {
       try {
-        const currentUser = auth.currentUser; // Get the current logged-in user
+        const currentUser = auth.currentUser;
         if (!currentUser) {
           console.error('No user is currently logged in.');
-          return; // Exit if no user is logged in
+          return; 
         }
 
         const requestsCollection = collection(db, 'requests');
@@ -28,11 +28,11 @@ function Completed() {
           request.status === 'Completed' && request.driverId === currentUser.uid
         );
 
-        setCompletedRequests(completedList); // Set the completed requests data to state
+        setCompletedRequests(completedList);
       } catch (error) {
         console.error('Error fetching completed requests:', error);
       } finally {
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false);
       }
     };
 
@@ -40,7 +40,7 @@ function Completed() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading message while fetching data
+    return <div>Loading...</div>;
   }
 
   return (

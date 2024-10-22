@@ -8,7 +8,7 @@ function DriverMap() {
   const [driverLocation, setDriverLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [map, setMap] = useState(null); // State to hold map instance
+  const [map, setMap] = useState(null); 
 
   useEffect(() => {
     const fetchOrderData = async (retries = 3) => {
@@ -40,17 +40,17 @@ function DriverMap() {
           } else {
             setError('Order not found.');
           }
-          break; // Exit loop if successful
+          break;
         } catch (err) {
           console.error('Error fetching order/driver data:', err);
           setError('Failed to fetch order/driver data.');
-          retries -= 1; // Decrement retry count
+          retries -= 1;
           if (!retries) {
-            setLoading(false); // Set loading to false if all retries fail
+            setLoading(false);
           }
         }
       }
-      setLoading(false); // Ensure loading is set to false when done
+      setLoading(false);
     };
 
     fetchOrderData();
@@ -78,14 +78,9 @@ function DriverMap() {
       // Create a marker for the driver's location
       const marker = new window.H.map.Marker({ lat: driverLocation.lat, lng: driverLocation.lng });
       newMap.addObject(marker);
-
-      // Optional: Add a UI component for pan/zoom controls
       window.H.ui.UI.createDefault(newMap, defaultLayers);
-
-      // Set the map instance in state
       setMap(newMap);
 
-      // Optional: Make the map responsive
       window.addEventListener('resize', () => {
         if (newMap) {
           newMap.setSize();
@@ -127,7 +122,6 @@ function DriverMap() {
           {/* HERE Map Container */}
           <div id="mapContainer" style={{ height: '400px', width: '100%' }} />
           
-          {/* Zoom Controls */}
           <div className="text-center mt-4">
             <button onClick={zoomIn} className="bg-blue-500 text-white px-4 py-2 rounded">Zoom In</button>
             <button onClick={zoomOut} className="bg-blue-500 text-white px-4 py-2 rounded ml-2">Zoom Out</button>

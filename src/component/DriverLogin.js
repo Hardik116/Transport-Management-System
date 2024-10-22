@@ -19,21 +19,18 @@ const DriverLogin = () => {
       const user = userCredential.user;
 
       // Fetch user data from Firestore
-      const userDocRef = doc(db, 'users', user.uid); // Adjust this if your user documents are in a different collection
+      const userDocRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        // Check if the user is a driver
         if (userData.isDriver) {
-          // Redirect to driver's home page
           navigate('/driverhome');
         } else {
           // Log out the user if not a driver
           await auth.signOut();
           setError('You are not authorized to log in as a driver. Please use the user login page.');
-          // Optionally, you can redirect to the user login page
-          // navigate('/userlogin');
+          
         }
       } else {
         await auth.signOut();

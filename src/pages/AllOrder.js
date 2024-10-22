@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebaseConfig'; // Import Firestore instance
-import { collection, query, where, getDocs } from 'firebase/firestore'; // Removed imports related to rating
-import { auth } from '../firebaseConfig'; // Import authentication module
+import { db } from '../firebaseConfig'; 
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { auth } from '../firebaseConfig'; 
 
 function AllOrder() {
   const [orders, setOrders] = useState([]);
@@ -17,7 +17,6 @@ function AllOrder() {
         return;
       }
 
-      // console.log('Fetching orders for user ID:', userId); // Debugging line
 
       try {
         const ordersCollection = collection(db, 'requests');
@@ -25,7 +24,7 @@ function AllOrder() {
         const ordersQuery = query(
           ordersCollection,
           where('userId', '==', userId),
-          where('status', '==', 'Completed') // Adjust this if your completed status is different
+          where('status', '==', 'Completed') 
         );
         const orderSnapshot = await getDocs(ordersQuery);
         const orderList = orderSnapshot.docs.map(doc => ({
@@ -53,7 +52,7 @@ function AllOrder() {
   }
 
   if (orders.length === 0) {
-    return <div>No completed orders found.</div>; // Updated message for no orders
+    return <div>No completed orders found.</div>; 
   }
 
   return (

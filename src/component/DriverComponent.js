@@ -18,10 +18,10 @@ const DriverComponent = () => {
             }));
 
             setDrivers(driverList);
-            setLoading(false); // Set loading to false after the first fetch
+            setLoading(false);
         }, (error) => {
             console.error('Error fetching driver data:', error);
-            setLoading(false); // Set loading to false in case of an error
+            setLoading(false); 
         });
 
         // Cleanup subscription on unmount
@@ -30,7 +30,7 @@ const DriverComponent = () => {
 
     useEffect(() => {
         const unsubscribe = fetchDrivers();
-        return () => unsubscribe(); // Cleanup on component unmount
+        return () => unsubscribe();
     }, []);
 
     // Columns for the Ant Design Table
@@ -54,7 +54,7 @@ const DriverComponent = () => {
             title: 'Total Rides',
             dataIndex: 'totalRides',
             key: 'totalRides',
-            render: (text) => (text ? text : 'No rides'), // Handle cases with no rides
+            render: (text) => (text ? text : 'No rides'),
         },
         {
             title: 'Vehicle Type',
@@ -87,7 +87,7 @@ const DriverComponent = () => {
                 <Table
                     columns={columns}
                     dataSource={drivers}
-                    rowKey="id" // Set unique key for each row
+                    rowKey="id" 
                 />
             )}
         </div>

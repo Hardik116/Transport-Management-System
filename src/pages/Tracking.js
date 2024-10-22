@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseConfig';
-import { collection, query, where, onSnapshot } from 'firebase/firestore'; // Import onSnapshot from Firestore
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,11 +31,11 @@ function IncompleteOrders() {
         ...doc.data(),
       }));
       setOrders(orderList);
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false); 
     }, (error) => {
       console.error('Error fetching orders:', error);
       setError('Error fetching orders.');
-      setLoading(false); // Ensure loading is set to false in case of error
+      setLoading(false); 
     });
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
@@ -43,7 +43,7 @@ function IncompleteOrders() {
   }, []);
 
   const handleTrackOrder = (orderId) => {
-    navigate(`/location/${orderId}`); // Navigate to location page with order ID
+    navigate(`/location/${orderId}`);
   };
 
   if (loading) {
@@ -71,7 +71,7 @@ function IncompleteOrders() {
             <p><strong>Drop Location:</strong> {order.dropLocation?.city || 'N/A'}</p>
             <p><strong>Parcel Weight:</strong> {order.parcelWeight || 'N/A'}</p>
             <button 
-              onClick={() => handleTrackOrder(order.id)} // Pass order ID to track the order
+              onClick={() => handleTrackOrder(order.id)}
               className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
               Track Order

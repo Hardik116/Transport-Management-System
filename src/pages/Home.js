@@ -5,10 +5,10 @@ import { auth } from '../firebaseConfig';
 
 const Home = () => {
   const [countries, setCountries] = useState([]);
-  const [pickupStates, setPickupStates] = useState([]); // Separate state for pickup
-  const [dropOffStates, setDropOffStates] = useState([]); // Separate state for drop-off
-  const [pickupCities, setPickupCities] = useState([]); // Separate cities for pickup
-  const [dropOffCities, setDropOffCities] = useState([]); // Separate cities for drop-off
+  const [pickupStates, setPickupStates] = useState([]);
+  const [dropOffStates, setDropOffStates] = useState([]); 
+  const [pickupCities, setPickupCities] = useState([]); 
+  const [dropOffCities, setDropOffCities] = useState([]); 
   const [pickupCountry, setPickupCountry] = useState('');
   const [pickupState, setPickupState] = useState('');
   const [pickupCity, setPickupCity] = useState('');
@@ -61,8 +61,8 @@ const Home = () => {
     setPickupCountry(countryName);
     setPickupState('');
     setPickupCity('');
-    setPickupStates([]); // Reset states
-    setPickupCities([]); // Reset cities
+    setPickupStates([]); 
+    setPickupCities([]); 
 
     if (countryName) {
       try {
@@ -82,7 +82,7 @@ const Home = () => {
   const handlePickupStateChange = async (stateName) => {
     setPickupState(stateName);
     setPickupCity('');
-    setPickupCities([]); // Reset cities
+    setPickupCities([]); 
 
     if (stateName) {
       try {
@@ -103,8 +103,8 @@ const Home = () => {
     setDropOffCountry(countryName);
     setDropOffState('');
     setDropOffCity('');
-    setDropOffStates([]); // Reset states
-    setDropOffCities([]); // Reset cities
+    setDropOffStates([]); 
+    setDropOffCities([]); 
 
     if (countryName) {
       try {
@@ -124,7 +124,7 @@ const Home = () => {
   const handleDropOffStateChange = async (stateName) => {
     setDropOffState(stateName);
     setDropOffCity('');
-    setDropOffCities([]); // Reset cities
+    setDropOffCities([]); 
 
     if (stateName) {
       try {
@@ -166,7 +166,6 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center bg-red-500 h-[87.5vh]">
-      {/* Navigation Buttons */}
      
 
       <div className="text-center mb-8 p-6 bg-red-500 rounded-lg w-4/5">
@@ -180,7 +179,6 @@ const Home = () => {
       <div className="flex flex-col items-center p-8 rounded-lg bg-red-500">
         <h2 className="text-3xl font-semibold mb-6 text-white">Book Your Delivery</h2>
         <div className="flex items-center justify-center w-full space-x-4">
-          {/* Pickup Location Dropdowns */}
           <select
             value={pickupCountry}
             onChange={(e) => handlePickupCountryChange(e.target.value)}
@@ -216,7 +214,6 @@ const Home = () => {
         </div>
 
         <div className="flex items-center justify-center w-full space-x-4">
-          {/* Drop-off Location Dropdowns */}
           <select
             value={dropOffCountry}
             onChange={(e) => handleDropOffCountryChange(e.target.value)}
@@ -267,7 +264,6 @@ const Home = () => {
             <option value="Mini Truck">Mini Truck</option>
             <option value="Medium Truck">Medium Truck</option>
             <option value="Heavy Truck">Heavy Truck</option>
-            {/* Add more vehicle types as needed */}
           </select>
         </div>
 

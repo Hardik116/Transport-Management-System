@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../firebaseConfig'; // Ensure Firebase and Firestore are correctly imported
+import { auth, db } from '../firebaseConfig'; 
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc, updateDoc } from 'firebase/firestore'; // Firestore to save user data
+import { doc, setDoc, updateDoc } from 'firebase/firestore'; 
 
 const DriverSignup = () => {
   // State for form fields
@@ -10,9 +10,9 @@ const DriverSignup = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [vehicleType, setVehicleType] = useState('Mini Truck'); // New state for vehicle type
+  const [vehicleType, setVehicleType] = useState('Mini Truck');
   const [error, setError] = useState('');
-  const [location, setLocation] = useState({ lat: null, lng: null }); // State for driver's location
+  const [location, setLocation] = useState({ lat: null, lng: null });
   const navigate = useNavigate();
 
   // Function to get the driver's current location using Geolocation API
@@ -42,7 +42,7 @@ const DriverSignup = () => {
     try {
       // Get the driver's current location before proceeding with signup
       const currentLocation = await getCurrentLocation();
-      setLocation(currentLocation); // Store the fetched location
+      setLocation(currentLocation);
 
       // Create user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -55,8 +55,8 @@ const DriverSignup = () => {
         email: user.email,
         phone,
         isDriver: true,
-        vehicleType, // Save vehicle type
-        location: currentLocation, // Save the driver's fetched location
+        vehicleType, 
+        location: currentLocation, 
       });
 
       // Also store driver's info in a separate 'drivers' collection
@@ -66,8 +66,8 @@ const DriverSignup = () => {
         email: user.email,
         phone,
         vehicleType,
-        location: currentLocation, // Save the driver's fetched location
-        isAvailable: true, // Set initial availability
+        location: currentLocation, 
+        isAvailable: true, 
         createdAt: new Date(),
       });
 
@@ -85,8 +85,8 @@ const DriverSignup = () => {
     const updateLocation = async () => {
       try {
         const currentLocation = await getCurrentLocation();
-        const driverDocRef = doc(db, 'drivers', userId); // Reference to the driver's Firestore document
-        await updateDoc(driverDocRef, { location: currentLocation }); // Update location in Firestore
+        const driverDocRef = doc(db, 'drivers', userId);
+        await updateDoc(driverDocRef, { location: currentLocation });
       } catch (error) {
         console.error('Error updating location:', error);
       }
@@ -101,7 +101,6 @@ const DriverSignup = () => {
 
   useEffect(() => {
     return () => {
-      // Cleanup logic if necessary
     };
   }, []);
 

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import Booking from './pages/Booking';
 import IncompleteOrders from './pages/Tracking';
 import Mappage from './pages/MapPage';
 import Login from './component/Login';
@@ -21,7 +20,6 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/booking" element={<Booking />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/allorder" element={<AllOrder />} />

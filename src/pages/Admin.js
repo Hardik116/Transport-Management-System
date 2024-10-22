@@ -7,12 +7,10 @@ import TripComponent from '../component/TripComponent';
 const { Header, Content, Footer } = Layout;
 
 const AdminDashboard = () => {
-    // Initialize selectedSection to 'users' to show UserComponent by default
     const [selectedSection, setSelectedSection] = useState('users'); 
 
-    // Function to handle menu click
     const handleMenuClick = (e) => {
-        setSelectedSection(e.key); // Set the selected section based on the key
+        setSelectedSection(e.key); 
     };
 
     return (
@@ -22,7 +20,7 @@ const AdminDashboard = () => {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    selectedKeys={[selectedSection]} // Set selected key based on state
+                    selectedKeys={[selectedSection]} 
                     onClick={handleMenuClick}
                 >
                     <Menu.Item key="users">Users</Menu.Item>

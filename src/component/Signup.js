@@ -8,7 +8,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState(''); // New phone state
+  const [phone, setPhone] = useState(''); 
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const db = getFirestore();
@@ -27,17 +27,17 @@ const Signup = () => {
         email,
         name,
         phone,
-        isDriver: false // Assuming the default isDriver is false for regular users
+        isDriver: false 
       });
 
-      navigate('/'); // Redirect after successful signup
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
   };
 
   const handleDriverSignup = () => {
-    navigate('/driver-signup'); // Navigate to the Driver Signup page
+    navigate('/driver-signup');
   };
 
   return (

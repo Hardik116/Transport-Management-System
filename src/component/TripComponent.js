@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Spin } from 'antd';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-
-// Firestore initialization (Firebase already configured)
 const db = getFirestore();
 
 const TripComponent = () => {
@@ -18,19 +16,18 @@ const TripComponent = () => {
             }));
 
             setTrips(tripList);
-            setLoading(false); // Set loading to false after the first fetch
+            setLoading(false); 
         }, (error) => {
             console.error('Error fetching trip data:', error);
-            setLoading(false); // Set loading to false in case of an error
+            setLoading(false); 
         });
 
-        // Cleanup subscription on unmount
         return () => unsubscribe();
     };
 
     useEffect(() => {
         const unsubscribe = fetchTrips();
-        return () => unsubscribe(); // Cleanup on component unmount
+        return () => unsubscribe(); 
     }, []);
 
     // Columns for the Ant Design Table
@@ -77,9 +74,9 @@ const TripComponent = () => {
             render: (text) => {
                 // Check if text is a Firestore Timestamp and convert it to a Date
                 if (text && text.toDate) {
-                    return text.toDate().toLocaleString(); // Format the date
+                    return text.toDate().toLocaleString(); 
                 }
-                return 'Invalid date'; // Fallback if the date is not valid
+                return 'Invalid date'; 
             },
         },
         {
@@ -111,7 +108,7 @@ const TripComponent = () => {
                 <Table
                     columns={columns}
                     dataSource={trips}
-                    rowKey="id" // Set unique key for each row
+                    rowKey="id" 
                 />
             )}
         </div>
