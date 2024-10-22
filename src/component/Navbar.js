@@ -1,90 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, db } from '../firebaseConfig'; // Ensure db is imported for Firestore
+import { auth, db } from '../firebaseConfig'; 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'; // Firestore to get user data
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
-  const [isDriver, setIsDriver] = useState(false); // New state to track if the user is a driver
-  const [userName, setUserName] = useState(''); // State for storing the user's name
+  const [isDriver, setIsDriver] = useState(false); 
+  const [userName, setUserName] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        setUser(currentUser); // Set the logged-in user
+        setUser(currentUser); 
         
-        // Fetch the user's role from Firestore (assuming user roles are stored in Firestore)
-        const userDocRef = doc(db, 'users', currentUser.uid); // Replace 'users' with your collection name
+        const userDocRef = doc(db, 'users', currentUser.uid); 
         const userSnapshot = await getDoc(userDocRef);
 
         if (userSnapshot.exists()) {
           const userData = userSnapshot.data();
-          setIsDriver(userData.isDriver || false); // Set isDriver based on Firestore data
-          setUserName(userData.name || ''); // Assume 'name' field holds the user's name
+          setIsDriver(userData.isDriver || false); 
+          setUserName(userData.name || ''); 
         }
       } else {
         setUser(null);
-        setIsDriver(false); // Reset driver state if no user is logged in
-        setUserName(''); // Reset userName if no user is logged in
+        setIsDriver(false); 
+        setUserName(''); 
       }
     });
 
-    return () => unsubscribe(); // Cleanup the subscription when the component unmounts
+    return () => unsubscribe(); 
   }, []);
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Reset the user state to null after logging out
-      setIsDriver(false); // Reset isDriver state
-      setUserName(''); // Reset userName state
-      navigate('/'); // Redirect to the login page after logging out
+      setUser(null); 
+      setIsDriver(false); 
+      setUserName(''); 
+      navigate('/'); 
     } catch (err) {
       console.error('Logout failed', err);
     }
   };
 
-  // Function to handle navigation based on user role
   const handleHomeClick = () => {
     if (isDriver) {
-      navigate('/driverhome'); // Redirect to driver home if the user is a driver
+      navigate('/driverhome'); 
     } else {
-      navigate('/'); // Redirect to regular home if the user is not a driver
+      navigate('/'); 
     }
   };
+  
   const handleAdmin = () => {
-      navigate('/admin'); 
+    navigate('/admin'); 
   };
 
   return (
-    <nav className="bg-black p-4 flex justify-between items-center">
-      {/* Title link with conditional navigation */}
-      <div  className=" flex justify-between items-center">
-
-      <div
-        className="text-white text-2xl font-bold cursor-pointer"
-        onClick={handleHomeClick} // Call handleHomeClick to redirect based on user role
+    <nav className="bg-gray-900 shadow-md p-4 flex justify-between items-center sticky top-0 z-50">
+      <div className="flex items-center space-x-6">
+        <div
+          className="text-white text-2xl font-bold cursor-pointer transition hover:text-gray-300"
+          onClick={handleHomeClick} 
         >
-        FastMove
-      </div>{user &&!isDriver && (
-        <>
-           <div className="flex space-x-4">
-        <button onClick={() => navigate('/tracking')} className="bg-black text-white px-2 py-2 rounded-md hover:bg-blue-700 transition duration-300">
-          Pending Orders
-        </button>
-        <button onClick={() => navigate('/allorder')} className="bg-black text-white px-2 py-2 rounded-md hover:bg-green-700 transition duration-300">
-          Completed Orders
-        </button>
-      </div></>
-        )}
+          FastMove
         </div>
-      
-      <div className="flex items-center">
-        {/* Greeting message for the logged-in user */}
-        
+
+        {user && !isDriver && (
+          <div className="flex space-x-4">
+            <button
+              onClick={() => navigate('/tracking')}
+              className="bg-white text-black px-3 py-2 rounded-md hover:bg-blue-500 transition duration-300"
+            >
+              Pending Orders
+            </button>
+            <button
+              onClick={() => navigate('/allorder')}
+              className="bg-white text-black px-3 py-2 rounded-md hover:bg-green-500 transition duration-300"
+            >
+              Completed Orders
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center space-x-4">
         {user && (
           <span className="text-white mr-4">
             Hi, {userName || user.email}
@@ -105,15 +106,14 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        {
-          user?.email === "admin@gmail.com" && 
+        {user?.email === "admin@gmail.com" && (
           <button
-          onClick={handleAdmin}
-          className="bg-white mx-3 text-black px-4 py-2 rounded-md hover:bg-gray-200 transition duration-300"
+            onClick={handleAdmin}
+            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 transition duration-300"
           >
             Admin
           </button>
-          }
+        )}
       </div>
     </nav>
   );

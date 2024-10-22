@@ -273,7 +273,7 @@ const Home = () => {
 
         <button
           onClick={handleNext}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
+          className="bg-black text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
         >
           Next
         </button>
