@@ -49,9 +49,6 @@ const Navbar = () => {
     }
   };
   
-  const handleAdmin = () => {
-    navigate('/admin'); 
-  };
 
   return (
     <nav className="bg-gray-900 shadow-md p-4 flex justify-between items-center sticky top-0 z-50">
@@ -90,14 +87,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
-        {user?.email === "admin@gmail.com" && (
-          <Link
-            onClick={handleAdmin}
-            className="text-white px-3 py-2 rounded-md hover:bg-red-500 transition duration-300"
-          >
-            Admin
-          </Link>
-        )}
+        
       </div>
 
       <div className="flex items-center space-x-4">

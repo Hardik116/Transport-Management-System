@@ -13,7 +13,7 @@ import DriverLogin from './component/DriverLogin';
 import Completed from './component/Completed';
 import DriverMap from './pages/Location';
 import Admin from './pages/Admin';
-import Layout from './component/Layout';
+import AdminDashboard from './pages/Admin';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/allorder" element={<AllOrder />} />
         <Route path="/signup" element={<Signup />} />
