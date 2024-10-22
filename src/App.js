@@ -13,6 +13,7 @@ import DriverLogin from './component/DriverLogin';
 import Completed from './component/Completed';
 import DriverMap from './pages/Location';
 import Admin from './pages/Admin';
+import Layout from './component/Layout';
 
 function App() {
   return (

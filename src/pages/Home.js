@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { auth } from '../firebaseConfig';
+import Navbar from '../component/Navbar';
 
 const Home = () => {
   const [countries, setCountries] = useState([]);
@@ -165,7 +166,8 @@ const Home = () => {
   
 
   return (
-    <div className="flex flex-col items-center justify-center bg-red-500 h-[87.5vh]">
+    <>
+    <div className="flex flex-col p-4 items-center justify-center bg-red-500">
      
 
       <div className="text-center mb-8 p-6 bg-red-500 rounded-lg w-4/5">
@@ -183,7 +185,7 @@ const Home = () => {
             value={pickupCountry}
             onChange={(e) => handlePickupCountryChange(e.target.value)}
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             <option value="">Select Country</option>
             {countries.map((country) => (
               <option key={country.country_short_name} value={country.country_name}>{country.country_name}</option>
@@ -194,7 +196,7 @@ const Home = () => {
             value={pickupState}
             onChange={(e) => handlePickupStateChange(e.target.value)}
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             <option value="">Select State</option>
             {pickupStates.map((state) => (
               <option key={state.state_name} value={state.state_name}>{state.state_name}</option>
@@ -229,7 +231,7 @@ const Home = () => {
             value={dropOffState}
             onChange={(e) => handleDropOffStateChange(e.target.value)}
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             <option value="">Select State</option>
             {dropOffStates.map((state) => (
               <option key={state.state_name} value={state.state_name}>{state.state_name}</option>
@@ -240,7 +242,7 @@ const Home = () => {
             value={dropOffCity}
             onChange={(e) => setDropOffCity(e.target.value)}
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             <option value="">Select City</option>
             {dropOffCities.map((city) => (
               <option key={city.city_name} value={city.city_name}>{city.city_name}</option>
@@ -255,12 +257,12 @@ const Home = () => {
             onChange={(e) => setEstimatedWeight(e.target.value)}
             placeholder="Estimated Weight (kg)"
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            />
           <select
             value={vehicleType}
             onChange={(e) => setVehicleType(e.target.value)}
             className="w-1/3 p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             <option value="Mini Truck">Mini Truck</option>
             <option value="Medium Truck">Medium Truck</option>
             <option value="Heavy Truck">Heavy Truck</option>
@@ -270,11 +272,12 @@ const Home = () => {
         <button
           onClick={handleNext}
           className="bg-black text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
-        >
+          >
           Next
         </button>
       </div>
     </div>
+            </>
   );
 };
 

@@ -7,26 +7,23 @@ import { doc, getDoc } from 'firebase/firestore';
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [isDriver, setIsDriver] = useState(false); 
-  const [userName, setUserName] = useState(''); 
+  const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser); 
-        
         const userDocRef = doc(db, 'users', currentUser.uid); 
         const userSnapshot = await getDoc(userDocRef);
 
         if (userSnapshot.exists()) {
           const userData = userSnapshot.data();
           setIsDriver(userData.isDriver || false); 
-          setUserName(userData.name || ''); 
         }
       } else {
         setUser(null);
         setIsDriver(false); 
-        setUserName(''); 
       }
     });
 
@@ -38,7 +35,6 @@ const Navbar = () => {
       await signOut(auth);
       setUser(null); 
       setIsDriver(false); 
-      setUserName(''); 
       navigate('/'); 
     } catch (err) {
       console.error('Logout failed', err);
@@ -67,52 +63,58 @@ const Navbar = () => {
           FastMove
         </div>
 
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? '✖' : '☰'} {/* Hamburger icon */}
+        </button>
+      </div>
+
+      {/* Navbar Links */}
+      <div className={`flex-col md:flex-row md:flex md:space-x-4 ${menuOpen ? 'flex' : 'hidden md:flex'}`}>
         {user && !isDriver && (
-          <div className="flex space-x-4">
-            <button
-              onClick={() => navigate('/tracking')}
-              className="bg-white text-black px-3 py-2 rounded-md hover:bg-blue-500 transition duration-300"
+          <>
+            <Link
+              to="/tracking"
+              className="text-white px-3 py-2 rounded-md hover:bg-blue-500 transition duration-300"
             >
               Pending Orders
-            </button>
-            <button
-              onClick={() => navigate('/allorder')}
-              className="bg-white text-black px-3 py-2 rounded-md hover:bg-green-500 transition duration-300"
+            </Link>
+            <Link
+              to="/allorder"
+              className="text-white px-3 py-2 rounded-md hover:bg-green-500 transition duration-300"
             >
               Completed Orders
-            </button>
-          </div>
+            </Link>
+          </>
+        )}
+        {user?.email === "admin@gmail.com" && (
+          <Link
+            onClick={handleAdmin}
+            className="text-white px-3 py-2 rounded-md hover:bg-red-500 transition duration-300"
+          >
+            Admin
+          </Link>
         )}
       </div>
 
       <div className="flex items-center space-x-4">
-        {user && (
-          <span className="text-white mr-4">
-            Hi, {userName || user.email}
-          </span>
-        )}
         {user ? (
-          <button
+          <Link
             onClick={handleLogout}
-            className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition duration-300"
+            className="text-white px-4 py-2 rounded-md hover:bg-gray-200 transition duration-300"
           >
             Logout
-          </button>
+          </Link>
         ) : (
           <Link
             to="/login"
-            className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition duration-300"
+            className="text-white px-4 py-2 rounded-md hover:bg-gray-200 transition duration-300"
           >
             Login
           </Link>
-        )}
-        {user?.email === "admin@gmail.com" && (
-          <button
-            onClick={handleAdmin}
-            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 transition duration-300"
-          >
-            Admin
-          </button>
         )}
       </div>
     </nav>
