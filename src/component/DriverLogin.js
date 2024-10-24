@@ -24,7 +24,7 @@ const DriverLogin = () => {
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        if (userData.isDriver) {
+        if (userData.isDriver) {  
           navigate('/driverhome');
         } else {
           // Log out the user if not a driver

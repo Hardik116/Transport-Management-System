@@ -73,6 +73,7 @@ const DriverSignup = () => {
 
       // Start updating the driver's location
       startLocationUpdates(user.uid, currentLocation);
+      console.log(user.uid)
 
       // Redirect to driver's home page
       navigate('/driverhome');
@@ -93,7 +94,7 @@ const DriverSignup = () => {
     };
 
     // Update location every 5 minutes (300000 milliseconds)
-    const intervalId = setInterval(updateLocation, 1000*60*60*4);
+    const intervalId = setInterval(updateLocation, 1000*60*1);
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
